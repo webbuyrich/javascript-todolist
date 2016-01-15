@@ -28,6 +28,12 @@ var createNewTaskElement = function(taskString){
 	var deleteButton  = document.createElement('button');
 
 	//Each element needs modifying and appending
+	listItem.appendChild(checkbox);
+	listItem.appendChild(label);
+	listItem.appendChild(editInput);
+	listItem.appendChild(editButton);
+	listItem.appendChild(deleteButton);
+	
 	return listItem;
 }
 
@@ -40,7 +46,7 @@ var addTask = function(){
 	var listItem = createNewTaskElement('Some New Task');
 
 	//Append listItem to incompleteTasksHolder
-	listItem
+	incompleteTasksHolder.appendChild(listItem);
 	
 		
 }
