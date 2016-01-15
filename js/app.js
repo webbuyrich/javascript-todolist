@@ -48,6 +48,7 @@ var addTask = function(){
 	//Append listItem to incompleteTasksHolder
 	incompleteTasksHolder.appendChild(listItem);
 	
+	bindTaskEvents(listItem, incompleteTask);
 		
 }
 
@@ -81,20 +82,24 @@ var deleteTask = function(){
 //Mark a task as complete
 var completeTask = function(){
 	console.log('Complete Task....');
-	//When the checkbox is checked
-		//Append the task list item to the #completed-tasks
+	//Append the task list item to the #completed-tasks
+	var listItem = this.parentNode;
+	completedTasksHolder.appendChild(listItem);	
+	bindTaskEvents(listItem, incompleteTask);
 }
 
 
 //Mark a task as incomplete
 var incompleteTask = function(){
 	console.log('Incomplete Task....');
-	//When checkbox is unchecked
-		//Append to incomplete tasks
+	//Append to incomplete tasks
+	var listItem = this.parentNode;
+	incompleteTasksHolder.appendChild(listItem);
+	bindTaskEvents(listItem, completeTask);
 }
 	
 var bindTaskEvents = function(taskListItem, checkBoxEventHandler){
-	console.log('Bind to list item events');
+	//console.log('Bind to list item events');
 	//select taskListItem children
 	var checkbox = taskListItem.querySelector('input[type=checkbox]');
 	var editButton	= taskListItem.querySelector('button.edit');
@@ -117,14 +122,14 @@ addButton.onclick = addTask;
 for (i = 0; i < incompleteTasksHolder.children.length; i++){
 	//bind events to list items children (taskCompleted)
 	bindTaskEvents(incompleteTasksHolder.children[i], completeTask);
-	console.log('Incomplete is: ' + i);
+	//console.log('Incomplete is: ' + i);
 }
 
 //cycle over the completeTasksHolder ul list items
 for (i = 0; i < completedTasksHolder.children.length; i++){
 	//bind events to list items children (taskIncomplete)
 	bindTaskEvents(completedTasksHolder.children[i], incompleteTask);
-	console.log('Complete is: ' + i);
+	//console.log('Complete is: ' + i);
 }
 
 
