@@ -53,15 +53,23 @@ var createNewTaskElement = function(taskString){
 //Add New task
 var addTask = function(){
 	console.log('Add Task....');
-	
-	//Create a new list item with the text from #new-task:
-	var listItem = createNewTaskElement(taskInput.value);
 
-	//Append listItem to incompleteTasksHolder
-	incompleteTasksHolder.appendChild(listItem);
+	var addTaskInput = taskInput.value;
+	if(addTaskInput != ''){
+		//Create a new list item with the text from #new-task:
+		var listItem = createNewTaskElement(taskInput.value);
+
+		//Append listItem to incompleteTasksHolder
+		incompleteTasksHolder.appendChild(listItem);
+		
+		bindTaskEvents(listItem, completeTask);
+		taskInput.value = '';
+	} else{
+		
+		alert('You must enter an item');
+	}
 	
-	bindTaskEvents(listItem, completeTask);
-	taskInput.value = '';
+	
 		
 }
 
@@ -72,6 +80,7 @@ var editTask = function(){
 	
 	var listItem = this.parentNode;
 	var editInput = listItem.querySelector('input[type=text]');
+	var editButton = listItem.querySelector('button.edit');
 	var label = listItem.querySelector('label');
 	var containsClass = listItem.classList.contains('editMode');
 	//If the parent has the class .editMode
@@ -79,10 +88,12 @@ var editTask = function(){
 		//Switch from .editMode
 		//label text become the input's value
 		label.innerText = editInput.value;
+		editButton.innerText = 'Edit';
 	} else {
 		//Switch to .editMode
 		//input value becomes the label's text
 		editInput.value = label.innerText;
+		editButton.innerText = 'Save';
 	}
 	//Togle .editMode on the parent
 	listItem.classList.toggle('editMode');
@@ -146,8 +157,11 @@ var ajaxRequest = function(){
 }
 
 //Set click handler to the addTask function
-addButton.addEventListener('click', addTask);
-addButton.addEventListener('click', ajaxRequest);
+
+	addButton.addEventListener('click', addTask);
+	addButton.addEventListener('click', ajaxRequest);
+
+
 
 // addButton.onclick = ajaxRequest;
 
